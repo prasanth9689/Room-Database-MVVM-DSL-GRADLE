@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="noteColor1">#CEFA9C</color>
+    <color name="noteColor2">#9BEFFA</color>
+    <color name="noteColor3">#FAEF92</color>
+    <color name="noteColor4">#BF9DFB</color>
+    <color name="noteColor5">#FB918F</color>
+    <color name="noteColor6">#9CF4EC</color>
+    <color name="noteColor7">#FF91B6</color>
+    <color name="noteColor8">#FFFFFF</color>
+    <color name="noteColor9">#FB9271</color>
+</resources>

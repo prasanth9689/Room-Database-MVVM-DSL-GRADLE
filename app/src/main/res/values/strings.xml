@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Room Database</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="deleted">"Deleted "</string>
+    <string name="undo">Undo</string>
+    <string name="inserted_success">Inserted success</string>
+    <string name="data_not_found">Data Not Found</string>
+</resources>
