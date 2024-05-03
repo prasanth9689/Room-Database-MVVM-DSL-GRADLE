@@ -5,29 +5,26 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
+import androidx.appcompat.widget.SearchView
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.skyblue.room_database.R
 import com.skyblue.room_database.adapter.NoteAdapter
 import com.skyblue.room_database.databinding.ActivityMainBinding
 import com.skyblue.room_database.model.Note
 import com.skyblue.room_database.room.NoteDatabase
 import com.skyblue.room_database.viewmodel.NoteViewModel
-import com.google.android.material.snackbar.Snackbar
-import java.util.Collections
-import java.util.Random
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.widget.SearchView
-import androidx.cardview.widget.CardView
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -155,14 +152,37 @@ class MainActivity : AppCompatActivity() {
     private fun popUpDisplay(cardView: CardView) {
         val popUp = PopupMenu(this,cardView)
         popUp.inflate(R.menu.pop_menu)
+
+
+        popUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+
+            viewModel.deleteNote(selectedNote)
+
+            Toast.makeText(
+                this@MainActivity, "Deleted success",
+                Toast.LENGTH_SHORT
+            ).show()
+            true
+        })
+
         popUp.show()
     }
 
     fun onMenuItemClick(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.deleteItem) {
             viewModel.deleteNote(selectedNote)
+            Log.e("hl__", "hello")
             return true
         }
         return false
     }
+
+
+//    private fun onMenuItemClick(item: MenuItem?): Boolean {
+//        if (item?.itemId == R.id.deleteItem) {
+//            viewModel.deleteNote(selectedNote)
+//            return true
+//        }
+//        return false
+//    }
 }

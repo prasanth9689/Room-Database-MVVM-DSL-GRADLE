@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.skyblue.room_database.model.Note
-import com.skyblue.room_database.views.DATABASE_NAME
+import com.skyblue.room_database.helper.DATABASE_NAME
 
 @Database(entities = arrayOf(Note::class), version = 1 , exportSchema = false)
 abstract class NoteDatabase : RoomDatabase(){
