@@ -16,7 +16,6 @@ class NoteAdapter(private val context: Context, val listener: MainActivity) : Re
 
     private val NotesList = ArrayList<Note>()
     private val fullList = ArrayList<Note>()
-    lateinit var adapter: NoteAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -27,8 +26,6 @@ class NoteAdapter(private val context: Context, val listener: MainActivity) : Re
     override fun getItemCount(): Int {
         return NotesList.size
     }
-
-
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentNote = NotesList[position]
@@ -42,14 +39,14 @@ class NoteAdapter(private val context: Context, val listener: MainActivity) : Re
 
         holder.notes_layout.setOnClickListener{
             listener.onItemClicked(NotesList[holder.adapterPosition])
+
+            val debug = ""
         }
         holder.notes_layout .setOnLongClickListener {
             listener.onLongItemClicked(NotesList[holder.adapterPosition],holder.notes_layout)
             true
         }
     }
-
-
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val notes_layout = itemView.findViewById<CardView>(R.id.card_layout)
@@ -58,12 +55,6 @@ class NoteAdapter(private val context: Context, val listener: MainActivity) : Re
         val date = itemView.findViewById<TextView>(R.id.tv_date)
 
     }
-
-    ////////////////////// FUNCTION .////////////////////
-
-
-
-/////// update list
 
     fun updateList(newList: List<Note>){
         fullList.clear()
@@ -116,17 +107,14 @@ class NoteAdapter(private val context: Context, val listener: MainActivity) : Re
 
     fun addItem(position: Int, note: Note){
         NotesList.add(position, note)
-
     }
 
     fun getItems(): ArrayList<Note> {
         return NotesList
     }
-    /////////
 
     interface NotesItemClickListener {
         fun onItemClicked(note: Note)
         fun onLongItemClicked(note: Note, cardView: CardView)
     }
-
 }

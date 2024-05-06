@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import com.skyblue.room_database.model.Note
+import com.skyblue.room_database.model.Notes
 import com.skyblue.room_database.repository.NotesRepository
 import com.skyblue.room_database.room.NoteDatabase
 
@@ -29,7 +30,7 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
         repository.insertNote(note)
     }
 
-    fun updateNote(note: Note) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateNote(note: Notes) = viewModelScope.launch(Dispatchers.IO) {
         repository.updateNote(note)
     }
 }

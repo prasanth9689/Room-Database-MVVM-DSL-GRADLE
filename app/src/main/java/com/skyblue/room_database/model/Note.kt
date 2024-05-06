@@ -12,4 +12,9 @@ data class Note(
 ) : java.io.Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
-}
+}data class Notes(
+    @ColumnInfo(name = "id") val id : Int?,
+    @ColumnInfo(name = "title") val title : String?,
+    @ColumnInfo(name = "note") val note : String?,
+    @ColumnInfo(name = "date") val date : String?
+)

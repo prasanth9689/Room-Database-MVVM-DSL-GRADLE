@@ -2,6 +2,7 @@ package com.skyblue.room_database.repository
 
 import androidx.lifecycle.LiveData
 import com.skyblue.room_database.model.Note
+import com.skyblue.room_database.model.Notes
 import com.skyblue.room_database.room.NoteDao
 
 class NotesRepository(private val noteDao: NoteDao) {
@@ -15,7 +16,7 @@ class NotesRepository(private val noteDao: NoteDao) {
         noteDao.deleteNote(note)
     }
 
-    suspend fun updateNote(note: Note){
+    suspend fun updateNote(note: Notes){
         noteDao.updateNote(note.id , note.title , note.note)
     }
 }

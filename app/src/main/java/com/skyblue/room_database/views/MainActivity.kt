@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.health.connect.datatypes.units.Length
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -34,15 +35,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: NoteAdapter
     lateinit var selectedNote : Note
 
-    private val updateNote = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-        if (result.resultCode == Activity.RESULT_OK){
-
-            val note = result.data?.getSerializableExtra("note") as? Note
-            if (note != null){
-                viewModel.updateNote(note)
-            }
-        }
-    }
+//    private val updateNote = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+//        if (result.resultCode == Activity.RESULT_OK){
+//
+//            val note = result.data?.getSerializableExtra("note") as? Note
+//            if (note != null){
+//                viewModel.updateNote(note)
+//            }
+//        }
+//    }
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                         //   postAdapter.notifyItemInserted(position)
                         adapter.addItem(position, deletedNotes)
                         adapter.notifyItemInserted(position)
-                        //      viewModel.updateNote(deletedNotes)
+                              viewModel.insertNote(deletedNotes)
                     }.show()
             }
         }).attachToRecyclerView(binding.recyclerView)
@@ -118,10 +119,12 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
         binding.noteCreateBtn.setOnClickListener {
             val intent = Intent(this,AddNote::class.java)
             getContent.launch(intent)
         }
+
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -139,9 +142,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onItemClicked(note: Note) {
+        Toast.makeText(this@MainActivity,  "Title :" + note.title, Toast.LENGTH_SHORT).show()
+
+        val mId = note.id.toString()
+
         val intent = Intent(this@MainActivity,AddNote::class.java)
-        intent.putExtra("current_note" , note)
-        updateNote.launch(intent)
+        intent.putExtra("current_note" , "1")
+        intent.putExtra("id", mId)
+        intent.putExtra("title", note.title)
+        intent.putExtra("note", note.note)
+        intent.putExtra("date", note.date)
+       startActivity(intent)
     }
 
     fun onLongItemClicked(note: Note, cardView: CardView) {
@@ -153,11 +164,9 @@ class MainActivity : AppCompatActivity() {
         val popUp = PopupMenu(this,cardView)
         popUp.inflate(R.menu.pop_menu)
 
-
-        popUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+        popUp.setOnMenuItemClickListener({ item ->
 
             viewModel.deleteNote(selectedNote)
-
             Toast.makeText(
                 this@MainActivity, "Deleted success",
                 Toast.LENGTH_SHORT
@@ -168,15 +177,14 @@ class MainActivity : AppCompatActivity() {
         popUp.show()
     }
 
-    fun onMenuItemClick(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.deleteItem) {
-            viewModel.deleteNote(selectedNote)
-            Log.e("hl__", "hello")
-            return true
-        }
-        return false
-    }
-
+//    fun onMenuItemClick(item: MenuItem?): Boolean {
+//        if (item?.itemId == R.id.deleteItem) {
+//            viewModel.deleteNote(selectedNote)
+//            Log.e("hl__", "hello")
+//            return true
+//        }
+//        return false
+//    }
 
 //    private fun onMenuItemClick(item: MenuItem?): Boolean {
 //        if (item?.itemId == R.id.deleteItem) {
