@@ -1,6 +1,7 @@
 package com.skyblue.room_database.views
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -21,6 +22,7 @@ import java.util.Date
 class AddNote : AppCompatActivity() {
     private lateinit var binding: ActivityAddNoteBinding
     lateinit var viewModel: NoteViewModel
+    val EMPLOYEE_KEY = "note"
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,16 +83,21 @@ class AddNote : AppCompatActivity() {
 
         if (mCurrentNote != null){
             Toast.makeText(this@AddNote, "Updated", Toast.LENGTH_SHORT).show()
-
             val  note = Notes(intent.getStringExtra("id")?.toInt(), binding.edtTitle.text.toString(), binding.edtMessage.text.toString(), currentDate)
             viewModel.updateNote(note)
         } else{
             Toast.makeText(this@AddNote, "New inserted", Toast.LENGTH_SHORT).show()
-
+            /*
             val  note = Note(binding.edtTitle.text.toString(), binding.edtMessage.text.toString(), currentDate)
             viewModel.insertNote(note)
 
             Toast.makeText(this@AddNote, getString(com.skyblue.room_database.R.string.inserted_success), Toast.LENGTH_SHORT).show()
+            finish()
+             */
+            val  note = Note(binding.edtTitle.text.toString(), binding.edtMessage.text.toString(), currentDate)
+            val intent = Intent()
+            intent.putExtra(EMPLOYEE_KEY, note)
+            setResult(RESULT_OK, intent)
             finish()
         }
     }

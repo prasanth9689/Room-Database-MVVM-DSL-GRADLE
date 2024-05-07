@@ -23,6 +23,7 @@ import com.skyblue.room_database.R
 import com.skyblue.room_database.adapter.NoteAdapter
 import com.skyblue.room_database.databinding.ActivityMainBinding
 import com.skyblue.room_database.model.Note
+import com.skyblue.room_database.model.Notes
 import com.skyblue.room_database.room.NoteDatabase
 import com.skyblue.room_database.viewmodel.NoteViewModel
 
@@ -35,15 +36,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: NoteAdapter
     lateinit var selectedNote : Note
 
-//    private val updateNote = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-//        if (result.resultCode == Activity.RESULT_OK){
-//
-//            val note = result.data?.getSerializableExtra("note") as? Note
-//            if (note != null){
-//                viewModel.updateNote(note)
-//            }
-//        }
-//    }
+    private val updateNote = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+
+            val note = result.data?.getSerializableExtra("note") as? Notes
+            if (note != null){
+                viewModel.updateNote(note)
+            }
+        }
+    }
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -116,12 +117,11 @@ class MainActivity : AppCompatActivity() {
                 if (note != null){
                     viewModel.insertNote(note)
                 }
-
             }
         }
 
         binding.noteCreateBtn.setOnClickListener {
-            val intent = Intent(this,AddNote::class.java)
+            val intent = Intent(this, AddNote::class.java)
             getContent.launch(intent)
         }
 
@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("title", note.title)
         intent.putExtra("note", note.note)
         intent.putExtra("date", note.date)
-       startActivity(intent)
+       updateNote.launch(intent)
     }
 
     fun onLongItemClicked(note: Note, cardView: CardView) {
